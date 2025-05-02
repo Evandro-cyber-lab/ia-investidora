@@ -1,14 +1,7 @@
-from flask import Flask
+import time
 import yfinance as yf
 import ta
 from datetime import datetime
-import time
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "A IA está funcionando!"
 
 def analisar_ativo(ativo="VALE3.SA"):
     print(f"⏳ Analisando {ativo} em {datetime.now().strftime('%d/%m %H:%M')}")
@@ -42,23 +35,9 @@ def analisar_ativo(ativo="VALE3.SA"):
             print("📉 Nenhum sinal agora.")
     except Exception as e:
         print("❌ Erro:", e)
-
-# Loop para análise
-def run_analysis():
-    while True:
-        analisar_ativo()
-        time.sleep(3600)  # roda a cada 1 hora
-
-# Iniciar servidor Flask e análise em segundo plano
-if __name__ == '__main__':
-    from threading import Thread
-    # Iniciar o Flask app em uma thread separada
-    thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000})
-    thread.start()
-
-    # Iniciar a análise em segundo plano
-    run_analysis()
-
+    
+    # Aguarda 60 segundos antes de fazer a próxima requisição
+    time.sleep(60)  # Pausa de 60 segundos entre as requisições
 
 # Loop 24/7
 while True:
