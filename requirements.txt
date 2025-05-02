@@ -1,2 +1,5 @@
 yfinance
 ta
+Flask
+yfinance
+ta
